@@ -1,14 +1,22 @@
 #![allow(non_snake_case)]
+
+mod comments;
+mod stories;
+
+use crate::StoryData;
+use comments::Comments;
 use dioxus::prelude::*;
-mod story_comment;
-mod story_item;
-use crate::{
-    api::{get_story_comments, get_top_stories},
-    StoryData, StoryItem,
-};
-use story_item::StoryItems;
+use stories::Stories;
+
+#[derive(Debug, Clone)]
+pub enum CommentsState {
+    Unset,
+    Loading,
+    Loaded(StoryData),
+}
 
 pub fn App() -> Element {
+    use_context_provider(|| Signal::new(CommentsState::Unset));
     rsx! {
         document::Stylesheet {
             // Urls are relative to your Cargo.toml file
@@ -18,36 +26,7 @@ pub fn App() -> Element {
             section { class: "flex flex-col w-4/12 h-full pt-3 overflow-y-scroll bg-gray-50",
                 Stories {}
             }
-            section { class: "flex flex-col w-8/12 px-4 bg-white rounded-r-3xl",
-                section {
-                    ul {}
-                }
-            }
+            section { class: "flex flex-col w-8/12 px-4 bg-white rounded-r-3xl", Comments {} }
         }
-    }
-}
-
-#[component]
-pub fn Stories() -> Element {
-    let stories = use_resource(move || get_top_stories(20));
-    match &*stories.read_unchecked() {
-        Some(Ok(stories)) => rsx! {
-          ul {
-            for story in stories {
-              StoryItems { story: story.clone() }
-            }
-          }
-        },
-        Some(Err(err)) => rsx! {
-          div { class: "mt-6 text-red-500",
-            p { "Failed to fetch stories" }
-            p { "{err}" }
-          }
-        },
-        None => rsx! {
-          div { class: "mt-6",
-            p { "Loading stories..." }
-          }
-        },
     }
 }
