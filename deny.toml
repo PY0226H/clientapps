@@ -36,6 +36,18 @@ ignore = [
     # "RUSTSEC-0000-0000",
     # { id = "RUSTSEC-0000-0000", reason = "理由…" },
     # "some-yanked-crate@0.1.1",
+    "RUSTSEC-2024-0413", # atk is unmaintained
+    "RUSTSEC-2024-0416", # atk-sys is unmaintained
+    "RUSTSEC-2024-0412", # gdk is unmaintained
+    "RUSTSEC-2024-0418", # gdk-sys is unmaintained
+    "RUSTSEC-2024-0411", # gdkwayland-sys is unmaintained
+    "RUSTSEC-2024-0417", # gdkx11 is unmaintained
+    "RUSTSEC-2024-0414", # gdkx11-sys is unmaintained
+    "RUSTSEC-2024-0415", # gtk is unmaintained
+    "RUSTSEC-2024-0420", # gtk-sys is unmaintained
+    "RUSTSEC-2024-0419", # gtk3-macros is unmaintained
+    "RUSTSEC-2024-0370", # proc-macro-error is unmaintained
+    "RUSTSEC-2024-0429"
 ]
 
 #######################################
@@ -55,6 +67,7 @@ allow = [
     "Zlib",
     "Unlicense",
     "CDLA-Permissive-2.0",
+    "Apache-2.0 WITH LLVM-exception",
 ]
 confidence-threshold = 0.8
 exceptions = [
